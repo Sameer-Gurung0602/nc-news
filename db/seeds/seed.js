@@ -14,7 +14,9 @@ const format = require("pg-format")
 // insertComments(commentData)
 const seed = ({ topicData, userData, articleData, commentData }) => {
   return db.query(`DROP TABLE IF EXISTS comments;
+      DROP TABLE IF EXISTS emoji_article_user;
       DROP TABLE IF EXISTS articles;
+      DROP TABLE IF EXISTS emojis;
       DROP TABLE IF EXISTS users;
       DROP TABLE IF EXISTS topics;`).then(()=>{
   return db.query(
@@ -36,6 +38,13 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       );
   `)
   })
+  .then(()=>{
+    return db.query(
+      `CREATE TABLE emojis(
+      emoji_id INT PRIMARY KEY,
+      EMOJI VARCHAR(200) NOT NULL);`
+    )
+  })
   .then(()=>{ 
     return db.query(
       `CREATE TABLE articles(
@@ -49,6 +58,16 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       article_img_url VARCHAR(1000)
   );
    `)})
+  .then(()=>{ 
+    return db.query(
+      `CREATE TABLE emoji_article_user(
+      emoji_article_user_id SERIAL PRIMARY KEY,
+      emoji_id INT REFERENCES emojis(emoji_id),
+      username VARCHAR(200) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE,
+      article_id INT REFERENCES articles(article_id)
+      );`
+    )
+  })
   .then(()=> {      
     return db.query(
       `CREATE TABLE comments(

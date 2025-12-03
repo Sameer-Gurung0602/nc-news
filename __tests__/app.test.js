@@ -22,6 +22,7 @@ describe("/api/topics",()=>{
     })
 
 })
+
 describe("/api/articles",()=>{
     test("GET returns 200 and responds with correctly formatted objects",()=>{
         return request(app)
@@ -38,6 +39,23 @@ describe("/api/articles",()=>{
                     expect(typeof article.votes).toBe("number")
                     expect(typeof article.article_img_url).toBe("string")
                     expect(typeof article.comment_count).toBe("string")
+                })
+            })
+    })
+
+
+})
+describe("/api/users",()=>{
+    test("GET returns 200 and responds with correctly formatted objects",()=>{
+        return request(app)
+            .get("/api/users")
+            .expect(200)
+            .then(({body})=>{
+                expect(body.users).not.toBe(0)
+                body.users.forEach((user)=> {
+                    expect(typeof user.username).toBe("string")
+                    expect(typeof user.name).toBe("string")
+                    expect(typeof user.avatar_url).toBe("string")
                 })
             })
     })

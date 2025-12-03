@@ -35,6 +35,7 @@ describe('seed', () => {
           expect(column.data_type).toBe('character varying');
         });
     });
+  })
 
     test('topics table has slug column as the primary key', () => {
       return db
@@ -80,6 +81,67 @@ describe('seed', () => {
         });
     });
   });
+
+    describe('emojis table', () => {
+    test('emojis table exists', () => {
+      return db
+        .query(
+          `SELECT EXISTS (
+            SELECT FROM 
+                information_schema.tables 
+            WHERE 
+                table_name = 'emojis'
+            );`
+        )
+        .then(({ rows: [{ exists }] }) => {
+          expect(exists).toBe(true);
+        });
+    });
+
+    test('emojis table has emoji_id column as SERIAL', () => {
+      return db
+        .query(
+          `SELECT *
+            FROM information_schema.columns
+            WHERE table_name = 'emojis'
+            AND column_name = 'emoji_id';`
+        )
+        .then(({ rows: [column] }) => {
+          expect(column.column_name).toBe('emoji_id');
+          expect(column.data_type).toBe('integer');
+        });
+    });
+
+    test('emojis table has emoji_id column as the primary key', () => {
+      return db
+        .query(
+          `SELECT column_name
+            FROM information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu
+            ON tc.constraint_name = kcu.constraint_name
+            WHERE tc.constraint_type = 'PRIMARY KEY'
+            AND tc.table_name = 'emojis';`
+        )
+        .then(({ rows: [{ column_name }] }) => {
+          expect(column_name).toBe('emoji_id');
+        });
+    });
+
+    test('emojis table has emoji column as varying character', () => {
+      return db
+        .query(
+          `SELECT column_name, data_type, column_default
+            FROM information_schema.columns
+            WHERE table_name = 'emojis'
+            AND column_name = 'emoji';`
+        )
+        .then(({ rows: [column] }) => {
+          expect(column.column_name).toBe('emoji');
+          expect(column.data_type).toBe('character varying');
+        });
+    });
+
+
 
   describe('users table', () => {
     test('users table exists', () => {
@@ -362,6 +424,114 @@ describe('seed', () => {
         });
     });
   });
+
+
+
+  describe('emoji_article_user table', ()=>{
+       test('emoji_article_user table exists', () => {
+      return db
+        .query(
+          `SELECT EXISTS (
+            SELECT FROM 
+                information_schema.tables 
+            WHERE 
+                table_name = 'emoji_article_user'
+            );`
+        )
+        .then(({ rows: [{ exists }] }) => {
+          expect(exists).toBe(true);
+        });
+    });
+
+    test('emoji article user table has emoji_article_user_id column as SERIAL', () => {
+      return db
+        .query(
+          `SELECT *
+            FROM information_schema.columns
+            WHERE table_name = 'emoji_article_user'
+            AND column_name = 'emoji_article_user_id';`
+        )
+        .then(({ rows: [column] }) => {
+          expect(column.column_name).toBe('emoji_article_user_id');
+          expect(column.data_type).toBe('integer');
+        });
+    });
+
+    test('emoji_article_user table has emoji_article_user_id column as the primary key', () => {
+      return db
+        .query(
+          `SELECT column_name
+            FROM information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu
+            ON tc.constraint_name = kcu.constraint_name
+            WHERE tc.constraint_type = 'PRIMARY KEY'
+            AND tc.table_name = 'emoji_article_user';`
+        )
+        .then(({ rows: [{ column_name }] }) => {
+          expect(column_name).toBe('emoji_article_user_id');
+        });
+    });
+
+     test('emoji_id column references an emoji_id from the emoji table', () => {
+      return db.query(`
+        SELECT *
+        FROM information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+          ON tc.constraint_name = kcu.constraint_name
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON ccu.constraint_name = tc.constraint_name
+        WHERE tc.constraint_type = 'FOREIGN KEY'
+          AND tc.table_name = 'emoji_article_user'
+          AND kcu.column_name = 'emoji_id'
+          AND ccu.table_name = 'emojis'
+          AND ccu.column_name = 'emoji_id';
+      `).then(({ rows }) => {
+        expect(rows).toHaveLength(1); 
+      });
+    });
+ 
+    test("username column references a username from the users table", () => { 
+      return db.query(`
+        SELECT *
+        FROM information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+          ON tc.constraint_name = kcu.constraint_name
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON ccu.constraint_name = tc.constraint_name
+        WHERE tc.constraint_type = 'FOREIGN KEY'
+          AND tc.table_name = 'emoji_article_user'
+          AND kcu.column_name = 'username'
+          AND ccu.table_name = 'users'
+          AND ccu.column_name = 'username';
+      `)
+        .then(({ rows }) => {
+          expect(rows).toHaveLength(1); 
+        });
+    })
+    //username foreign key varchar
+    
+      test('article_id column references an article from the articles table', () => {
+      return db.query(`
+        SELECT *
+        FROM information_schema.table_constraints AS tc
+        JOIN information_schema.key_column_usage AS kcu
+          ON tc.constraint_name = kcu.constraint_name
+        JOIN information_schema.constraint_column_usage AS ccu
+          ON ccu.constraint_name = tc.constraint_name
+        WHERE tc.constraint_type = 'FOREIGN KEY'
+          AND tc.table_name = 'emoji_article_user'
+          AND kcu.column_name = 'article_id'
+          AND ccu.table_name = 'articles'
+          AND ccu.column_name = 'article_id';
+      `).then(({ rows }) => {
+        expect(rows).toHaveLength(1); 
+      });
+    });
+     
+  })
+
+
+
 
   describe('comments table', () => {
     test('comments table exists', () => {

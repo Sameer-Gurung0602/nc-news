@@ -18,7 +18,8 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       DROP TABLE IF EXISTS articles;
       DROP TABLE IF EXISTS emojis;
       DROP TABLE IF EXISTS users;
-      DROP TABLE IF EXISTS topics;`).then(()=>{
+      DROP TABLE IF EXISTS topics;`)
+  .then(()=>{
   return db.query(
       `CREATE TABLE topics(
       slug VARCHAR(200) PRIMARY KEY,
@@ -56,6 +57,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       votes INT DEFAULT 0,
       article_img_url VARCHAR(1000)
+
   );
    `)})
   .then(()=>{ 

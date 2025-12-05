@@ -93,12 +93,15 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
     return db.query(insertArticles(articleData))
   })
   .then((data)=>{
+    
     const articlesRef = createLookUp(data.rows, "title", "article_id")
     
-    commentData.forEach(comment =>{
-    comment.article_title = articlesRef[comment.article_title]
+    const dataWithIds = commentData.map(comment =>{
+      const newComment = Object.assign({article_id : articlesRef[comment.article_title]}, comment)//spread operator
+      delete newComment.article_title
+      return newComment
     })
-    const rows = commentData.map((data)=>{
+    const rows = dataWithIds.map((data)=>{
     return Object.values(data)
     })
     

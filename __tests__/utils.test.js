@@ -1,10 +1,13 @@
 const {createLookUp} = require("../db/seeds/utils.js");
-
-describe("createLookUp",()=>{
+const {commentData,articleData} = require("../db/data/test-data/")
+const db = require("../db/connection.js")
+ describe("createLookUp",()=>{
     test ("returns an object",()=>{
         expect(typeof createLookUp([],"","")).toBe('object')
     
     })
+ 
+    
     test ("When given an array with one object, returns the correct key value pair",()=>{
         const data = [
             {

@@ -1,5 +1,5 @@
 #Link to the hosted version
-- The link to the hosted version can be found at:
+- The link to the hosted version can be found at: https://nc-news-xnco.onrender.com/
 
 #Project Summary
 - The aim of this project is to build a reddit like application which allows for users to post comments, articles, and like articles/comments.

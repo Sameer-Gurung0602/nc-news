@@ -6,6 +6,7 @@ const {getAllArticles, getArticleById, getCommentsById, addCommentById, updateAr
 const {getAllUsers} = require("./controllers/users.controller")
 
 app.use(express.json())
+app.use("/api",express.static('public'))
 app.get("/api/topics",getAllTopics)
 app.get("/api/articles",getAllArticles)
 app.get("/api/users",getAllUsers)

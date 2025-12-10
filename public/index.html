@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+    <style>
+table, th, td {
+  border:1px solid black;
+}
+</style>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,49 +27,75 @@
 
       <main>
 
-          <h1>Available EndPoints</h1>
-          <ul>
-              <li>/api</li>
-              <br />
-              <p>
-                  The homepage of the api, provides an overview of the available
-                  endpoints
-                </p>
-                <li>/api/topics</li>
-                <p>GET request to the endpoint fetches all topics</p>
-                <p>Responds with 200 OK- A list of all topics</p>
-                <li>/api/articles</li>
-                <p>GET request fetches all articles</p>
-                <p>Responds with 200 OK- A list of all articles</p>
-                <p>Accepts the following queries: sort_by, order, topic</p>
-                <p>
-                    Example request GET
-                    "/api/articles?sort_by=article_id&order=ASC&topic=mitch
-                </p>
-                <li>/api/users</li>
-                <p>GET request Fetches all users</p>
-                <p>Responds with 200 ok- A list of all articles</p>
-                <li>/api/articles/:article_id</li>
-                <p>Fetches articles by id</p>
-                <p>Example request: GET api/articles/1</p>
-                <p>Responds with 200 ok - article assosciared with article_id 1</p>
-                <p>Updates articles by id</p>
-                <p>Example request: PATCH api/articles/1</p>
-                <p>Example request body: {inc_votes : 99999}</p>
-                <p>Responds with 200 ok - updated article object</p>
-                <li>/api/articles/article_id/comments</li>
-                <p>Gets comments by article id</p>
-                <p>Responds with 200 ok - list of comments</p>
-                <p>Adds comment by article id</p>
-                <p>
-                    Example request body: { "article_id": 2, "body": "I love Cake",
-                    "author": "icellusedkars" }
-                </p>
-                <p>Responds with 201 ok - comment object</p>
-                <li>/api/comments/:comment_id</li>
-                <p>Deletes comment by id</p>
-                <p>Responds with 204 no content - empty object</p>
-            </ul>
+        <h1>Available EndPoints</h1>
+        <table style="width: 100%">
+
+            <tr>
+                <th>Endpoint</th>
+                <th>Description</th>
+                <th>Acceptable Queries</th>
+                <th>Request Body</th>
+                <th>Response</th>
+            </tr>
+            <tr>
+                <th>/api</th>
+                <th>The homepage of the api, provides details of available endpoints</th>
+                <th></th>
+                <th></th>
+                <th>200- OK</th>
+            </tr>
+            <tr>
+                <th>/api/topics</th>
+                <th>Fetches all topics</th>
+                <th></th>
+                <th></th>
+                <th>200- OK - A list of all topics</th>
+            </tr>
+            <tr>
+                <th>/api/articles</th>
+                <th>Fetches all articles</th>
+                <th> GET "/api/articles?sort_by=article_id&order=ASC&topic=mitch</th>
+                <th></th>
+                <th>200- OK - A list of all topics</th>
+            </tr>
+            <tr>
+                <th>/api/users</th>
+                <th>GET Fetches all users</th>
+                <th></th>
+                <th></th>
+                <th>200- OK - A list of all users</th>
+            </tr>
+            <tr>
+                <th>/api/articles/:article_id</th>
+                <th>GET Fetches articles by id
+                    PATCH updates articles by id
+                </th>
+                <th></th>
+                <th>Example request body: {inc_votes : 99999}</th>
+                <th>200- OK - article object </th>
+            </tr>
+            <tr>
+                <th>/api/articles/article_id/comments</th>
+                <th>GET - fetches comments by article id
+                    POST - adds comment to article
+                </th>
+                <th></th>
+                <th>Example request body: { "article_id": 2, "body": "I love Cake",
+                    "author": "icellusedkars" }</th>
+                    <th>200 -OK - List of comments 
+                        201 -CREATED - updated comment
+                    </th>
+                </tr>
+                <tr>
+                    <th>/api/comments/:comment_id</th>
+                    <th>DELETES comment by id</th>
+                    <th></th>
+                    <th></th>
+                    <th>204 -no content - empty object</th>
+                </tr>
+                
+            </table>
+                
     </body>
 </main>      
 </html>

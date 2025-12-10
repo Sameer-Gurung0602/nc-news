@@ -12,6 +12,37 @@
       <a href="/api/articles">Articles</a>
       <a href="/api/users">Users</a>
       <a href="/api/comments">Comments</a>
+      <p>
+        This api allows for users to post articles and comments. It also allows
+        for users to post comments/articles as well as vote and delete them.
+      </p>
+      <h2>Available EndPoints</h2>
+      <ul>
+        <li>/api</li>
+        <br />
+        <p>
+          The homepage of the api, provides an overview of the available
+          endpoints
+        </p>
+        <li>/api/topics</li>
+        <p>Fetches all topics</p>
+        <li>/api/articles</li>
+        <p>Fetches all articles</p>
+        <p>Accepts the following queries: sort_by, order, topic</p>
+        <li>/api/users</li>
+        <p>Fetches all users</p>
+        <li>/api/articles/:article_id</li>
+        <p>Fetches articles by id</p>
+        <p>Updates articles by id</p>
+        <li>/api/articles/article_id/comments</li>
+        <p>Gets comments by article id</p>
+        <p>Adds comment by article id</p>
+        <li>/api/comments/:comment_id</li>
+        <p>Fetches comments by id</p>
+        <p>Deletes comment by id</p>
+        <li>/api/comments/:comment_id</li>
+        <p>Delete comments by comment id</p>
+      </ul>
     </nav>
   </body>
 </html>

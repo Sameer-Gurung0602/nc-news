@@ -1,101 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-    <style>
-table, th, td {
-  border:1px solid black;
-}
-</style>
   <head>
+    <link rel="stylesheet" href="styles.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
   <body>
-      <section>
-          
-          <h1>News Website</h1>
-          <nav>
-              <a href="/api/topics">Topics</a>
-              <a href="/api/articles">Articles</a>
-              <a href="/api/users">Users</a>
-              <p>
-                  This api allows for users to post articles and comments. It also allows
-                  for users to post comments/articles as well as vote and delete them.
-                </p>
-        </nav>
-            </section>
+    <h1 id="maintitle">News Website</h1>
+    <nav class="navbar">
+      <ul>
+        <li><a href="/api/topics">Topics</a></li>
+        <li><a href="/api/articles">Articles</a></li>
+        <li><a href="/api/users">Users</a></li>
+      </ul>
+    </nav>
+    <main>
+      <div class="container">
+        <br />
+        <p id="description">
+          This API allows for users to post articles and comments. It also
+          allows for users to post comments/articles as well as vote and delete
+          them.
+        </p>
 
-      <main>
-
-        <h1>Available EndPoints</h1>
+        <h2 class="subheading">Available Endpoints</h2>
         <table style="width: 100%">
+          <tr>
+            <th>Endpoint</th>
+            <th>Description</th>
+            <th>Response</th>
+          </tr>
+          <tr>
+            <th>/api</th>
+            <th>
+              The homepage of the api, provides details of available endpoints
+            </th>
+            <th>200- OK</th>
+          </tr>
+          <tr>
+            <th>/api/topics</th>
+            <th>Fetches all topics</th>
+            <th>200- OK - A list of all topics</th>
+          </tr>
+          <tr>
+            <th>/api/articles</th>
+            <th>Fetches all articles</th>
+            <th>200- OK - A list of all topics</th>
+          </tr>
+          <tr>
+            <th>/api/users</th>
+            <th>GET Fetches all users</th>
+            <th>200- OK - A list of all users</th>
+          </tr>
+          <tr>
+            <th>/api/articles/:article_id</th>
+            <th>GET Fetches articles by id PATCH updates articles by id</th>
+            <th>200- OK - article object</th>
+          </tr>
+          <tr>
+            <th>/api/articles/article_id/comments</th>
+            <th>
+              GET - fetches comments by article id POST - adds comment to
+              article
+            </th>
+            <th>200 -OK - List of comments 201 -CREATED - updated comment</th>
+          </tr>
+          <tr>
+            <th>/api/comments/:comment_id</th>
+            <th>DELETES comment by id</th>
+            <th>204 -no content - empty object</th>
+          </tr>
+        </table>
 
-            <tr>
-                <th>Endpoint</th>
-                <th>Description</th>
-                <th>Acceptable Queries</th>
-                <th>Request Body</th>
-                <th>Response</th>
-            </tr>
-            <tr>
-                <th>/api</th>
-                <th>The homepage of the api, provides details of available endpoints</th>
-                <th></th>
-                <th></th>
-                <th>200- OK</th>
-            </tr>
-            <tr>
-                <th>/api/topics</th>
-                <th>Fetches all topics</th>
-                <th></th>
-                <th></th>
-                <th>200- OK - A list of all topics</th>
-            </tr>
-            <tr>
-                <th>/api/articles</th>
-                <th>Fetches all articles</th>
-                <th> GET "/api/articles?sort_by=article_id&order=ASC&topic=mitch</th>
-                <th></th>
-                <th>200- OK - A list of all topics</th>
-            </tr>
-            <tr>
-                <th>/api/users</th>
-                <th>GET Fetches all users</th>
-                <th></th>
-                <th></th>
-                <th>200- OK - A list of all users</th>
-            </tr>
-            <tr>
-                <th>/api/articles/:article_id</th>
-                <th>GET Fetches articles by id
-                    PATCH updates articles by id
-                </th>
-                <th></th>
-                <th>Example request body: {inc_votes : 99999}</th>
-                <th>200- OK - article object </th>
-            </tr>
-            <tr>
-                <th>/api/articles/article_id/comments</th>
-                <th>GET - fetches comments by article id
-                    POST - adds comment to article
-                </th>
-                <th></th>
-                <th>Example request body: { "article_id": 2, "body": "I love Cake",
-                    "author": "icellusedkars" }</th>
-                    <th>200 -OK - List of comments 
-                        201 -CREATED - updated comment
-                    </th>
-                </tr>
-                <tr>
-                    <th>/api/comments/:comment_id</th>
-                    <th>DELETES comment by id</th>
-                    <th></th>
-                    <th></th>
-                    <th>204 -no content - empty object</th>
-                </tr>
-                
-            </table>
-                
-    </body>
-</main>      
+        <h3 class="subheading">Example Request Body</h3>
+        <p>
+          When making a POST request to /api/articles/article_id/comments, the
+          request body should be structured like:
+        </p>
+        <p class="example">Example request body: {inc_votes : 99999}</p>
+        <p>
+          When making a PATCH request to /api/articles/:article_id, the request
+          body should be structured like:
+        </p>
+        <p class="example">Example request body: {inc_votes : 99999}</p>
+
+        <h4 class="subheading">Queries</h4>
+        <p>
+          On the endpoint /api/articles, the endpoint accepts the following
+          queries:
+        </p>
+        <ol>
+          <li>sort_by</li>
+          <li>order</li>
+          <li>topic</li>
+        </ol>
+        <p>The queries can be used on their own, for example:</p>
+        <p class="example">
+          /api/articles?sort_by=article_id <br />
+          /api/articles?order=ASC <br />
+          /api/articles?topic=mitch <br />
+        </p>
+        <p>The queries can also be used in combination, for example:</p>
+        <p class="example">
+          /api/articles?sort_by=created_at&order=ASC&topic=mitch
+        </p>
+      </div>
+    </main>
+  </body>
 </html>

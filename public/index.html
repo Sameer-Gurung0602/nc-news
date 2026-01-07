@@ -78,7 +78,11 @@
           When making a POST request to /api/articles/article_id/comments, the
           request body should be structured like:
         </p>
-        <p class="example">Example request body: {inc_votes : 99999}</p>
+        <p class="example">Example request body: {  
+        "article_id": 2,
+        "body": "I love Cake",
+        "author": "icellusedkars"
+    }</p>
         <p>
           When making a PATCH request to /api/articles/:article_id, the request
           body should be structured like:
